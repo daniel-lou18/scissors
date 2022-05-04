@@ -5,6 +5,7 @@ function computerPlay () {
 }
 
 const score = [0,0];
+
 function checkScore() {
     if (score[0] === 5 || score[1] === 5) {
         if (score[0] === 5) {
@@ -60,6 +61,11 @@ function playRound(playerSelection, computerSelection) {
     scorePlayer.textContent = score[0];
     scoreComputer.textContent = score[1];
     checkScore();
+};
+
+function moreRounds(e) {
+    const buttonId = Number(e.target.id);
+    const clickRound = playRound(buttonId, computerPlay());
 };
 
 // function game() {
@@ -172,7 +178,7 @@ buttons.forEach(function(button) {
     button.style.color = "white";
     button.style.padding = "16px 32px"
     button.style.borderRadius = "12px";
-    button.style.borderColor = "blue";
+    button.style.borderColor = "cornflowerblue";
     button.style.borderWidth = "6px";
 })
 
@@ -183,8 +189,3 @@ endMessage.style.fontSize = '30px';
 endMessage.style.fontWeight = 'bold';
 endMessage.style.marginTop = '28px';
 document.body.appendChild(endMessage);
-
-function moreRounds(e) {
-    const buttonId = Number(e.target.id);
-    const clickRound = playRound(buttonId, computerPlay());
-};
