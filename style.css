@@ -1,0 +1,57 @@
+body {
+    background-color: rgb(186, 224, 241);
+}
+
+.button:hover {
+    background: lightsteelblue;
+    border-color: teal;
+    color: darkblue;
+    transform: scale(1.3);
+    cursor: crosshair;
+}
+
+.button {
+    font-size: 16px;
+    font-weight: bold;
+    background: dodgerblue;
+    color: white;
+    padding: 16px 32px;
+    border-radius: 12px;
+    border-color: cornflowerblue;
+    border-width: 6px;
+    transition-duration: 150ms;
+}
+
+.num {
+    text-align: center;
+    font-size: 22px;
+    margin-top: 8px;
+    transition-duration: 150ms;
+    transition-delay: 250ms;
+}
+
+.message {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    transition-duration: 200ms;
+    transition-delay: 50ms;
+}
+
+.update-score {
+    transform: scale(5);
+    color: goldenrod;
+    font-weight: bold;
+}
+
+.update-message {
+    transform: scale(2);
+    color: goldenrod;
+}
+
+.end {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 28px;   
+}

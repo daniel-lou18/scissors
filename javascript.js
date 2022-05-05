@@ -23,49 +23,54 @@ function checkScore() {
 function playRound(playerSelection, computerSelection) {
     let resultMessage;
     if (score[0] < 5 && score[1] < 5) {
+        function winRound() {
+            message.textContent = resultMessage;
+            message.classList.add('update-message');
+            score[0] += 1;
+            scorePlayer.classList.add('update-score');
+        };
+        function loseRound() {
+            message.textContent = resultMessage;
+            message.classList.add('update-message');
+            score[1] += 1;
+            scoreComputer.classList.add('update-score');
+        };
+        function drawRound() {
+            message.textContent = resultMessage;
+            message.classList.add('update-message');
+        }
         if (playerSelection === 1 && computerSelection === 'paper') {
             resultMessage = "YOU LOSE! The computer's Paper beats your Rock.";
-            message.textContent = resultMessage;
-            score[1] += 1;
+            loseRound();
         } else if (playerSelection === 1 && computerSelection === 'scissors') {
             resultMessage = "YOU WIN! Your Rock beats the computer's Scissors.";
-            message.textContent = resultMessage;
-            score[0] += 1;
+            winRound();
         } else if (playerSelection === 2 && computerSelection === 'rock') {
             resultMessage = "YOU WIN! Your Paper beats the computer's Rock.";
-            message.textContent = resultMessage;
-            score[0] += 1;
+            winRound();
         } else if (playerSelection === 2 && computerSelection === 'scissors') {
             resultMessage = "YOU LOSE! The computer's Scissors beats your Paper.";
-            message.textContent = resultMessage;
-            score[1] += 1;
+            loseRound();
         } else if (playerSelection === 3 && computerSelection === 'rock') {
             resultMessage = "YOU LOSE! The computer's Rock beats your Scissors.";
-            message.textContent = resultMessage;
-            score[1] += 1;
+            loseRound();
         } else if (playerSelection === 3 && computerSelection === 'paper') {
             resultMessage = "YOU WIN! Your Scissors beats the computer's Paper.";
-            message.textContent = resultMessage;
-            score[0] += 1;
+            winRound();
         } else if (playerSelection === 1 && computerSelection === 'rock') {
             resultMessage = "IT\'S A DRAW! Both you and the computer chose Rock.";
-            message.textContent = resultMessage;
+            drawRound();
         } else if (playerSelection === 2 && computerSelection === 'paper') {
             resultMessage = "IT\'S A DRAW! Both you and the computer chose Paper.";
-            message.textContent = resultMessage;
+            drawRound();
         } else if (playerSelection === 3 && computerSelection === 'scissors') {
-            resultMessage = "IT\'S A DRAW! Both you and the computer chose Scissors.";
-            message.textContent = resultMessage;
+            resultMessage = "IT\'S A DRAW! Both you and the computer chose Scissors."
+            drawRound();
         }};
     
     scorePlayer.textContent = score[0];
     scoreComputer.textContent = score[1];
     checkScore();
-};
-
-function moreRounds(e) {
-    const buttonId = Number(e.target.id);
-    const clickRound = playRound(buttonId, computerPlay());
 };
 
 // function game() {
@@ -104,23 +109,21 @@ containerOutput.style.marginTop = '25px';
 document.body.appendChild(containerOutput);
 
 const message = document.createElement('div');
-message.style.textAlign = 'center';
-message.style.fontSize = "18px";
-message.style.fontWeight = 'bold';
+message.classList.add('message');
 message.textContent = "Please click on a button to choose ROCK, PAPER or SCISSORS"
 containerOutput.appendChild(message);
 
-const scoreboardTitle = document.createElement('div');
-scoreboardTitle.style.display = 'flex';
-scoreboardTitle.style.justifyContent = 'space-evenly';
-scoreboardTitle.style.marginTop = '25px';
-containerOutput.appendChild(scoreboardTitle);
+const scoreboardContainer = document.createElement('div');
+scoreboardContainer.style.display = 'flex';
+scoreboardContainer.style.justifyContent = 'space-evenly';
+scoreboardContainer.style.marginTop = '25px';
+containerOutput.appendChild(scoreboardContainer);
 
 const scoreboardLeft = document.createElement('div');
-scoreboardTitle.appendChild(scoreboardLeft);
+scoreboardContainer.appendChild(scoreboardLeft);
 
 const scoreboardRight = document.createElement('div');
-scoreboardTitle.appendChild(scoreboardRight);
+scoreboardContainer.appendChild(scoreboardRight);
 
 const scoreTitlePlayer = document.createElement('div');
 scoreTitlePlayer.textContent = "YOUR SCORE";
@@ -131,16 +134,12 @@ scoreTitleComputer.textContent = "SCORE COMPUTER";
 scoreboardRight.appendChild(scoreTitleComputer);
 
 const scorePlayer = document.createElement('div');
-scorePlayer.style.textAlign = 'center';
-scorePlayer.style.fontSize = '22px';
-scorePlayer.style.marginTop = '8px';
+scorePlayer.classList.add('score', 'num');
 scorePlayer.textContent = "0";
 scoreboardLeft.appendChild(scorePlayer);
 
 const scoreComputer = document.createElement('div');
-scoreComputer.style.textAlign = 'center';
-scoreComputer.style.fontSize = '22px';
-scoreComputer.style.marginTop = '8px';
+scoreComputer.classList.add('score', 'num');
 scoreComputer.textContent = "0";
 scoreboardRight.appendChild(scoreComputer);
 
@@ -169,23 +168,35 @@ button3.setAttribute('id', '3')
 button3.textContent = "SCISSORS"
 containerButton.appendChild(button3);
 
-const buttons = document.querySelectorAll('.button');
-buttons.forEach(button => button.addEventListener('click', moreRounds));
-buttons.forEach(function(button) {
-    button.style.fontSize = "16px";
-    button.style.fontWeight = "bold";
-    button.style.background = "dodgerblue";
-    button.style.color = "white";
-    button.style.padding = "16px 32px"
-    button.style.borderRadius = "12px";
-    button.style.borderColor = "cornflowerblue";
-    button.style.borderWidth = "6px";
-})
-
-
 const endMessage = document.createElement('div');
+endMessage.classList.add('end');
 endMessage.style.textAlign = 'center';
 endMessage.style.fontSize = '30px';
 endMessage.style.fontWeight = 'bold';
 endMessage.style.marginTop = '28px';
 document.body.appendChild(endMessage);
+
+function moreRounds(e) {
+    const buttonId = Number(e.target.id);
+    const clickRound = playRound(buttonId, computerPlay());
+};
+
+const buttons = document.querySelectorAll('.button');
+buttons.forEach(button => button.addEventListener('click', moreRounds));
+
+function removeTransitionScore(e) {
+    if (e.propertyName === 'transform') {
+        this.classList.remove('update-score');
+    };
+}
+
+const scores = document.querySelectorAll('.num');
+scores.forEach(score => score.addEventListener('transitionend', removeTransitionScore));
+
+function removeTransitionMessage(e) {
+    if (e.propertyName === "transform") {
+        this.classList.remove('update-message');
+    };
+}
+
+message.addEventListener('transitionend', removeTransitionMessage);
