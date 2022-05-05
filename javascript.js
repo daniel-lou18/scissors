@@ -170,10 +170,6 @@ containerButton.appendChild(button3);
 
 const endMessage = document.createElement('div');
 endMessage.classList.add('end');
-endMessage.style.textAlign = 'center';
-endMessage.style.fontSize = '30px';
-endMessage.style.fontWeight = 'bold';
-endMessage.style.marginTop = '28px';
 document.body.appendChild(endMessage);
 
 function moreRounds(e) {
